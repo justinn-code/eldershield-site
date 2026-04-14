@@ -214,7 +214,7 @@
 
             try {
                 // Change URL after hosting on PythonAnywhere
-                const response = await fetch('http://127.0.0.1:5000/create-payment', {
+                const response = await fetch('https://Eldershield.pythonanywhere.com/create-payment', {
                     method: 'POST',
                     headers: {'Content-Type': 'application/json'},
                     body: JSON.stringify(payload)
