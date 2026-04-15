@@ -13,13 +13,13 @@
         .animate-marquee { display: inline-block; animation: marquee 40s linear infinite; }
         .notification-pop { animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
         @keyframes slideUp { from { transform: translateY(120%); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        select { background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e"); background-position: right 1rem center; background-repeat: no-repeat; background-size: 1.5em 1.5em; }
     </style>
 </head>
 <body class="bg-white text-slate-900 leading-normal">
 
     <div class="bg-blue-900 text-white py-2 overflow-hidden border-b border-blue-800 sticky top-0 z-[100]">
-        <div id="ticker-content" class="whitespace-nowrap animate-marquee text-[10px] font-bold uppercase tracking-widest">
-            </div>
+        <div id="ticker-content" class="whitespace-nowrap animate-marquee text-[10px] font-bold uppercase tracking-widest"></div>
     </div>
 
     <nav class="flex justify-between items-center px-8 py-6 max-w-7xl mx-auto">
@@ -36,117 +36,63 @@
 
     <header class="py-24 px-6 max-w-6xl mx-auto text-center">
         <div class="inline-block px-4 py-1 rounded-full bg-blue-50 text-blue-700 text-[10px] font-black uppercase tracking-widest mb-8 border border-blue-100">
-            Foundation Status: Signal Defense Monitoring Active in All US Regions
+            Foundation Status: Signal Defense Monitoring Active
         </div>
         <h1 class="text-6xl md:text-8xl font-bold leading-[0.95] mb-8 tracking-tight">
             Protect Yours. <br><span class="text-blue-700 italic font-serif">Shield the Legacy.</span>
         </h1>
         <p class="text-xl text-slate-600 max-w-3xl mx-auto leading-relaxed mb-12">
-            The Guardian Pulse 1-for-2 donation protocol is a veteran-led barrier against digital impersonation. Your $59.99 contribution whitelists your line and <strong>sponsors the signals defense of two vulnerable seniors</strong> in your regional zip code.
+            The Guardian Pulse 1-for-2 donation protocol is a barrier against digital impersonation. Your contribution whitelists your line and <strong>sponsors the defense of vulnerable seniors</strong> in your regional zip code.
         </p>
-        <div class="flex flex-wrap justify-center gap-6">
-            <button onclick="openForm()" class="bg-slate-900 text-white px-12 py-6 rounded-2xl font-black uppercase text-xs tracking-widest hover:bg-blue-700 transition-all shadow-xl">Activate Perimeter Shield</button>
-        </div>
+        <button onclick="openForm()" class="bg-slate-900 text-white px-12 py-6 rounded-2xl font-black uppercase text-xs tracking-widest hover:bg-blue-700 transition-all shadow-xl">Activate Perimeter Shield</button>
     </header>
 
     <section id="protocol" class="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-16 mb-32 items-center">
         <div class="bg-slate-900 text-white p-16 rounded-[3.5rem] shadow-2xl">
-            <h3 class="text-4xl font-bold mb-8 italic serif text-blue-400">Regional Defense Allocation</h3>
-            <p class="text-slate-400 mb-10 text-lg leading-relaxed">
-                We operate at the Signal Layer, identifying "Synthetic Audio" frequencies that bypass traditional phones. Every donation is geo-locked to secure your neighborhood.
-            </p>
+            <h3 class="text-4xl font-bold mb-8 italic serif text-blue-400">Regional Allocation</h3>
             <div class="space-y-8">
                 <div class="flex items-center gap-6 border-b border-white/10 pb-6">
-                    <span class="text-blue-500 font-black text-xl">50%</span>
-                    <p class="text-sm font-medium tracking-wide">Signals Intelligence Perimeter & Active Metadata Filtering.</p>
+                    <span class="text-blue-500 font-black text-xl">Tier 1</span>
+                    <p class="text-sm font-medium tracking-wide">Family Sentinel: Protects your home + 2 local seniors.</p>
                 </div>
                 <div class="flex items-center gap-6 border-b border-white/10 pb-6">
-                    <span class="text-blue-500 font-black text-xl">25%</span>
-                    <p class="text-sm font-medium tracking-wide">Sponsorship for Senior A (High-risk neighbor in your zip code).</p>
-                </div>
-                <div class="flex items-center gap-6">
-                    <span class="text-blue-500 font-black text-xl">25%</span>
-                    <p class="text-sm font-medium tracking-wide">Sponsorship for Senior B (Veteran or Widow in your State).</p>
+                    <span class="text-blue-500 font-black text-xl">Tier 2</span>
+                    <p class="text-sm font-medium tracking-wide">Regional Guardian: Full Family Perimeter + Regional Center sponsorship.</p>
                 </div>
             </div>
         </div>
         <div>
             <h2 class="text-4xl font-bold mb-6 serif italic text-blue-900">Defense Beyond the App.</h2>
-            <p class="text-slate-600 text-lg mb-8 leading-relaxed">
-                Standard security has failed. Digital Impersonation Protocols allow predators to mimic loved ones with 99% accuracy. We provide the regional wall that protects those who built our country.
-            </p>
             <div class="grid grid-cols-2 gap-4">
                 <div class="bg-slate-50 p-6 rounded-3xl border border-slate-100">
                     <p class="text-3xl font-black text-slate-900" id="threat-count">4,102</p>
-                    <p class="text-[9px] font-black text-slate-400 uppercase tracking-widest mt-1">Signals Intercepted Today</p>
-                </div>
-                <div class="bg-slate-50 p-6 rounded-3xl border border-slate-100">
-                    <p class="text-3xl font-black text-blue-700">24k+</p>
-                    <p class="text-[9px] font-black text-slate-400 uppercase tracking-widest mt-1">Legacies Protected</p>
+                    <p class="text-[9px] font-black text-slate-400 uppercase tracking-widest mt-1">Intercepted Today</p>
                 </div>
             </div>
         </div>
     </section>
-
-    <section id="voices" class="bg-blue-50 py-32 px-6 rounded-[5rem] mx-4 mb-32">
-        <div class="max-w-6xl mx-auto">
-            <h2 class="text-5xl font-bold text-center mb-20 serif italic text-blue-900 underline decoration-blue-200 underline-offset-8">Mission Impact</h2>
-            <div class="grid md:grid-cols-3 gap-8">
-                <div class="bg-white p-10 rounded-[2.5rem] shadow-sm">
-                    <p class="text-slate-600 italic mb-8 leading-relaxed">"The impersonation calls stopped immediately. I can finally answer my phone without fear. I'm proud to help my community."</p>
-                    <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">— Arthur V., US Veteran</p>
-                </div>
-                <div class="bg-white p-10 rounded-[2.5rem] shadow-xl border border-blue-100">
-                    <p class="text-blue-900 italic mb-8 leading-relaxed font-medium">"My son set this up for me from Oklahoma. It’s given me my peace of mind back. I know my line is shielded."</p>
-                    <p class="text-[10px] font-black text-blue-400 uppercase tracking-widest">— Sarah P., Grandmother</p>
-                </div>
-                <div class="bg-white p-10 rounded-[2.5rem] shadow-sm">
-                    <p class="text-slate-600 italic mb-8 leading-relaxed">"We saw a total drop in fraudulent traffic for our parish members. This donor-funded model actually works."</p>
-                    <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">— Rev. Daniel K.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="py-24 px-6 flex justify-center bg-white">
-        <div class="w-full max-w-md bg-white rounded-[3.5rem] shadow-[0_40px_80px_-15px_rgba(0,0,0,0.15)] overflow-hidden border border-slate-100">
-            <div class="bg-blue-700 p-12 text-center text-white">
-                <p class="text-[10px] font-black uppercase tracking-widest mb-2 opacity-80 italic">Legacy Guardian Enrollment</p>
-                <h3 class="text-4xl font-bold serif italic">Join the Shield</h3>
-            </div>
-            <div class="p-12 text-center">
-                <div class="flex justify-center items-baseline mb-8">
-                    <span class="text-2xl font-bold text-slate-300">$</span>
-                    <span class="text-8xl font-black tracking-tighter text-slate-900">59</span>
-                    <span class="text-xl text-slate-300 ml-1">.99</span>
-                </div>
-                <button onclick="openForm()" class="w-full bg-blue-700 text-white py-6 rounded-2xl font-black uppercase text-sm tracking-widest shadow-xl hover:bg-blue-800 transition transform hover:-translate-y-1">Secure Family & Sponsor 2</button>
-                <p class="text-[9px] text-slate-400 font-bold uppercase tracking-widest mt-6">Secured by Signal Defense Standards</p>
-            </div>
-        </div>
-    </section>
-
-    <div id="live-pop" class="fixed bottom-8 left-8 z-[1000] hidden">
-        <div class="bg-white shadow-2xl rounded-2xl p-5 border border-slate-100 flex items-center gap-4 notification-pop">
-            <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center text-2xl shadow-inner">🛡️</div>
-            <div>
-                <p id="pop-text" class="text-xs font-bold text-slate-800 tracking-tight"></p>
-                <p class="text-[9px] text-slate-400 uppercase font-black tracking-widest">Enlisted as Legacy Guardian</p>
-            </div>
-        </div>
-    </div>
 
     <div id="intake-form" class="fixed inset-0 bg-slate-900/95 z-[500] hidden flex items-center justify-center p-6 backdrop-blur-sm">
         <div class="bg-white w-full max-w-md rounded-[3rem] p-12 shadow-2xl relative">
             <button onclick="closeForm()" class="absolute top-10 right-10 text-slate-400 font-bold uppercase text-[10px] tracking-widest">Close</button>
-            <h3 class="text-3xl font-bold text-slate-900 mb-8 serif text-center italic underline decoration-blue-100 underline-offset-4">Identity Verification</h3>
+            <h3 class="text-3xl font-bold text-slate-900 mb-8 serif text-center italic">Identity Verification</h3>
+            
             <form id="payment-form" onsubmit="handleFormSubmit(event)" class="space-y-5">
+                <div class="space-y-2">
+                    <label class="text-[10px] font-bold text-slate-400 uppercase tracking-widest ml-2">Mission Level</label>
+                    <select id="donation-tier" class="w-full bg-slate-50 border-none p-5 rounded-2xl text-sm italic outline-none focus:ring-2 focus:ring-blue-500 appearance-none">
+                        <option value="60">Family Sentinel - $59.99</option>
+                        <option value="150">Regional Guardian - $149.98</option>
+                    </select>
+                </div>
+
                 <input type="text" id="donor-name" required class="w-full bg-slate-50 border-none p-5 rounded-2xl text-sm italic outline-none focus:ring-2 focus:ring-blue-500" placeholder="Full Legal Name">
                 <input type="email" id="donor-email" required class="w-full bg-slate-50 border-none p-5 rounded-2xl text-sm italic outline-none focus:ring-2 focus:ring-blue-500" placeholder="Secure Email">
                 <input type="tel" id="donor-phone" required class="w-full bg-slate-50 border-none p-5 rounded-2xl text-sm italic outline-none focus:ring-2 focus:ring-blue-500" placeholder="Mobile Contact">
+                
                 <button type="submit" id="submit-btn" class="w-full bg-blue-700 text-white py-6 rounded-2xl font-black uppercase text-xs tracking-widest shadow-xl">Confirm & Enroll</button>
             </form>
-            <p class="text-[10px] text-center text-slate-400 mt-6 font-bold uppercase tracking-tighter italic">Payments processed via ShieldClimb Secure Gateway</p>
+            <p class="text-[10px] text-center text-slate-400 mt-6 font-bold uppercase tracking-tighter italic">Secured by ShieldClimb Gateway</p>
         </div>
     </div>
 
@@ -155,39 +101,18 @@
         function closeForm() { document.getElementById('intake-form').classList.add('hidden'); }
 
         // --- TICKER LOGIC ---
-        const scams = ["Synthetic Voice", "Frequency Spoof", "Deep-Capture", "Metadata Exploit"];
-        const states = ["OK", "TX", "FL", "OH", "AZ", "GA"];
+        const scams = ["Synthetic Voice", "Frequency Spoof", "Deep-Capture"];
+        const states = ["OK", "TX", "FL", "AZ"];
         function generateTicker() {
             const tickerContainer = document.getElementById('ticker-content');
             let tickerHtml = "";
             for (let i = 0; i < 6; i++) {
                 const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-                tickerHtml += `<span class="mx-12">● INTERCEPTED: ${time} - "${scams[Math.floor(Math.random()*scams.length)]}" Attempt Neutralized in ${states[Math.floor(Math.random()*states.length)]} Region</span>`;
+                tickerHtml += `<span class="mx-12">● INTERCEPTED: ${time} - "${scams[Math.floor(Math.random()*scams.length)]}" Neutralized in ${states[Math.floor(Math.random()*states.length)]} Region</span>`;
             }
             tickerContainer.innerHTML = tickerHtml + tickerHtml;
         }
         generateTicker();
-
-        // --- COUNTER LOGIC ---
-        let count = localStorage.getItem('threatCount') ? parseInt(localStorage.getItem('threatCount')) : 4102;
-        document.getElementById('threat-count').innerText = count.toLocaleString();
-        setInterval(() => {
-            count += Math.floor(Math.random() * 2) + 1;
-            localStorage.setItem('threatCount', count);
-            document.getElementById('threat-count').innerText = count.toLocaleString();
-        }, 15000);
-
-        // --- POPUP LOGIC ---
-        const names = ["Robert from Austin, TX", "Susan from Edmond, OK", "David from Tulsa, OK", "James from Miami, FL"];
-        function showPop() {
-            const pop = document.getElementById('live-pop');
-            const text = document.getElementById('pop-text');
-            text.innerText = names[Math.floor(Math.random() * names.length)];
-            pop.classList.remove('hidden');
-            setTimeout(() => { pop.classList.add('hidden'); }, 7000);
-            setTimeout(showPop, Math.floor(Math.random() * 600000) + 600000);
-        }
-        setTimeout(showPop, 12000);
 
         // --- FORM SUBMISSION ---
         async function handleFormSubmit(event) {
@@ -199,7 +124,8 @@
             const payload = {
                 name: document.getElementById('donor-name').value,
                 email: document.getElementById('donor-email').value,
-                phone: document.getElementById('donor-phone').value
+                phone: document.getElementById('donor-phone').value,
+                tier: document.getElementById('donation-tier').value 
             };
 
             try {
@@ -209,7 +135,11 @@
                     body: JSON.stringify(payload)
                 });
                 const result = await response.json();
-                if (result.checkout_url) { window.location.href = result.checkout_url; }
+                if (result.checkout_url) { 
+                    window.location.href = result.checkout_url; 
+                } else {
+                    throw new Error("No URL");
+                }
             } catch (e) {
                 alert("Grid Connection Timeout. Try again.");
                 btn.disabled = false;
