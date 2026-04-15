@@ -9,16 +9,10 @@
     <style>
         body { font-family: 'Inter', sans-serif; scroll-behavior: smooth; }
         h1, h2, h3, .serif { font-family: 'Crimson Pro', serif; }
-        
-        /* Ticker Animation */
         @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
         .animate-marquee { display: inline-block; animation: marquee 30s linear infinite; }
-        
-        /* Notification Slide-In */
         .notification-pop { animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
         @keyframes slideUp { from { transform: translateY(120%); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-
-        /* Custom UI Elements */
         .glass-card { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.3); }
         .gradient-text { background: linear-gradient(90deg, #1e40af, #3b82f6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
     </style>
@@ -26,8 +20,7 @@
 <body class="bg-[#F8FAFC] text-slate-900 leading-normal">
 
     <div class="bg-blue-950 text-white py-3 overflow-hidden border-b border-blue-800 sticky top-0 z-[100]">
-        <div id="ticker-content" class="whitespace-nowrap animate-marquee text-[10px] font-bold uppercase tracking-[0.2em] opacity-90">
-            </div>
+        <div id="ticker-content" class="whitespace-nowrap animate-marquee text-[10px] font-bold uppercase tracking-[0.2em] opacity-90"></div>
     </div>
 
     <nav class="flex justify-between items-center px-10 py-8 max-w-7xl mx-auto">
@@ -39,7 +32,7 @@
             <a href="#mission" class="hover:text-blue-700 transition">Our Mission</a>
             <a href="#protocol" class="hover:text-blue-700 transition">Defense Protocol</a>
         </div>
-        <button onclick="openForm()" class="bg-blue-700 text-white px-10 py-4 rounded-full text-[11px] font-black uppercase tracking-widest shadow-xl hover:bg-blue-800 hover:scale-105 transition-all">Enroll Perimeter</button>
+        <button onclick="openForm('60')" class="bg-blue-700 text-white px-10 py-4 rounded-full text-[11px] font-black uppercase tracking-widest shadow-xl hover:bg-blue-800 hover:scale-105 transition-all">Enroll Perimeter</button>
     </nav>
 
     <header class="py-28 px-6 max-w-6xl mx-auto text-center">
@@ -53,7 +46,7 @@
             A veteran-led 1-for-2 donation protocol. Your contribution secures your digital perimeter while funding the signal defense of vulnerable seniors in your zip code.
         </p>
         <div class="flex flex-wrap justify-center gap-6">
-            <button onclick="openForm()" class="bg-slate-900 text-white px-14 py-7 rounded-2xl font-black uppercase text-xs tracking-[0.2em] hover:bg-blue-700 transition-all shadow-2xl transform hover:-translate-y-1">Activate Regional Shield</button>
+            <button onclick="openForm('60')" class="bg-slate-900 text-white px-14 py-7 rounded-2xl font-black uppercase text-xs tracking-[0.2em] hover:bg-blue-700 transition-all shadow-2xl transform hover:-translate-y-1">Activate Regional Shield</button>
         </div>
     </header>
 
@@ -102,14 +95,14 @@
                 <h3 class="text-2xl font-bold serif italic text-slate-900 mb-4">Family Sentinel</h3>
                 <p class="text-slate-500 text-sm mb-8 leading-relaxed">Essential regional defense for your household plus sponsorship of 2 local seniors.</p>
                 <div class="text-5xl font-black text-slate-900 mb-10 tracking-tighter">$59.99</div>
-                <button onclick="openForm()" class="w-full bg-slate-100 text-slate-900 py-6 rounded-2xl font-black uppercase text-[11px] tracking-widest group-hover:bg-blue-700 group-hover:text-white transition-all">Select Protocol</button>
+                <button onclick="openForm('60')" class="w-full bg-slate-100 text-slate-900 py-6 rounded-2xl font-black uppercase text-[11px] tracking-widest group-hover:bg-blue-700 group-hover:text-white transition-all">Select Protocol</button>
             </div>
             <div class="bg-blue-700 p-12 rounded-[3.5rem] shadow-2xl text-white relative overflow-hidden">
                 <div class="absolute top-6 right-10 bg-blue-500 text-[9px] font-black px-3 py-1 rounded-full uppercase tracking-widest">Recommended</div>
                 <h3 class="text-2xl font-bold serif italic mb-4">Regional Guardian</h3>
                 <p class="text-blue-100 text-sm mb-8 leading-relaxed font-medium">Advanced perimeter defense plus sponsorship of a regional Senior Community Hub.</p>
                 <div class="text-5xl font-black mb-10 tracking-tighter">$149.98</div>
-                <button onclick="openForm()" class="w-full bg-white text-blue-900 py-6 rounded-2xl font-black uppercase text-[11px] tracking-widest hover:bg-blue-50 transition-all shadow-lg">Select Mission</button>
+                <button onclick="openForm('150')" class="w-full bg-white text-blue-900 py-6 rounded-2xl font-black uppercase text-[11px] tracking-widest hover:bg-blue-50 transition-all shadow-lg">Select Mission</button>
             </div>
         </div>
     </section>
@@ -159,7 +152,13 @@
     </div>
 
     <script>
-        function openForm() { document.getElementById('intake-form').classList.remove('hidden'); }
+        // Updated: The openForm function now accepts a default tier value
+        function openForm(tierValue = '60') { 
+            document.getElementById('intake-form').classList.remove('hidden'); 
+            if (tierValue) {
+                document.getElementById('donation-tier').value = tierValue;
+            }
+        }
         function closeForm() { document.getElementById('intake-form').classList.add('hidden'); }
 
         // --- TICKER LOGIC ---
@@ -187,9 +186,11 @@
         const donors = ["Robert H. from Tulsa", "Mary S. from Edmond", "D. Peterson from Oklahoma City", "Gary V. from Norman"];
         function showPop() {
             const pop = document.getElementById('live-pop');
-            document.getElementById('pop-text').innerText = donors[Math.floor(Math.random() * donors.length)];
-            pop.classList.remove('hidden');
-            setTimeout(() => { pop.classList.add('hidden'); }, 6000);
+            if(pop) {
+                document.getElementById('pop-text').innerText = donors[Math.floor(Math.random() * donors.length)];
+                pop.classList.remove('hidden');
+                setTimeout(() => { pop.classList.add('hidden'); }, 6000);
+            }
             setTimeout(showPop, Math.random() * 40000 + 40000);
         }
         setTimeout(showPop, 10000);
@@ -202,11 +203,14 @@
             btn.innerText = "SYNCHRONIZING SECURE NODE...";
             btn.disabled = true;
 
+            // CRITICAL FIX: Grabbing the tier value explicitly before sending
+            const selectedTier = document.getElementById('donation-tier').value;
+
             const payload = {
                 name: document.getElementById('donor-name').value,
                 email: document.getElementById('donor-email').value,
                 phone: document.getElementById('donor-phone').value,
-                tier: document.getElementById('donation-tier').value 
+                tier: selectedTier 
             };
 
             try {
