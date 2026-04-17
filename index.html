@@ -221,40 +221,35 @@
         }
         setTimeout(showPop, 5000);
 
-        // --- PAYMENT LOGIC ---
         async function handleFormSubmit(event) {
             event.preventDefault();
             const btn = document.getElementById('submit-btn');
             const originalText = btn.innerText;
-            btn.innerText = "INITIALIZING DEFENSE LINK...";
+            btn.innerText = "ESTABLISHING SECURE CONNECTION...";
             btn.disabled = true;
 
             const selectedTier = document.getElementById('donation-tier').value;
 
             try {
+                // We call YOUR server. Your server calls ShieldClimb.
                 const response = await fetch('https://Eldershield.pythonanywhere.com/create-payment', {
                     method: 'POST',
                     headers: {'Content-Type': 'application/json'},
                     body: JSON.stringify({ tier: selectedTier })
                 });
                 
-                const config = await response.json();
+                const result = await response.json();
                 
-                // Browser-side API call to avoid PythonAnywhere timeout
-                const walletUrl = `https://shieldclimb.com/api/create-wallet.php?address=${config.payout_wallet}&callback=https://google.com`;
-                
-                const walletResp = await fetch(walletUrl);
-                const walletData = await walletResp.json();
-
-                if (walletData.address_in) {
-                    const finalUrl = `https://payment.shieldclimb.com/hosted-checkout.php?address=${walletData.address_in}&amount=${config.amount}&currency=USD&order_id=GP_${selectedTier}_${Date.now()}`;
-                    window.location.href = finalUrl;
+                if (result.checkout_url) {
+                    // SUCCESS: Open the payment page
+                    window.location.href = result.checkout_url;
                 } else {
-                    throw new Error("API Limit");
+                    throw new Error(result.error || "Gateway Error");
                 }
 
             } catch (e) {
-                alert("Signal busy. Attempting reconnection...");
+                console.error(e);
+                alert("Gateway is synchronizing. Please wait 5 seconds and click again.");
                 btn.disabled = false;
                 btn.innerText = originalText;
             }
