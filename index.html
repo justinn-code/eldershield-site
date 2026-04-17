@@ -107,6 +107,7 @@
         </div>
     </section>
 
+    <!-- Live notification pop -->
     <div id="live-pop" class="fixed bottom-10 left-10 z-[1000] hidden">
         <div class="glass-card shadow-2xl rounded-[2rem] p-6 flex items-center gap-5 notification-pop border-blue-100">
             <div class="w-14 h-14 bg-blue-600 rounded-2xl flex items-center justify-center text-2xl shadow-lg">🛡️</div>
@@ -117,6 +118,7 @@
         </div>
     </div>
 
+    <!-- Enrollment modal -->
     <div id="intake-form" class="fixed inset-0 bg-slate-900/90 z-[500] hidden flex items-center justify-center p-6 backdrop-blur-md">
         <div class="bg-white w-full max-w-lg rounded-[3.5rem] p-16 shadow-2xl relative">
             <button onclick="closeForm()" class="absolute top-12 right-12 text-slate-300 hover:text-slate-600 font-black uppercase text-[10px] tracking-widest transition">Close</button>
@@ -130,18 +132,23 @@
                 <div class="space-y-3">
                     <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-4">Select Defense Tier</label>
                     <select id="donation-tier" class="w-full bg-slate-50 border-2 border-transparent p-6 rounded-[1.5rem] text-sm font-semibold outline-none focus:border-blue-500 focus:bg-white transition-all appearance-none cursor-pointer">
-                        <option value="60">Family Sentinel - $59.99</option>
-                        <option value="150">Regional Guardian - $149.98</option>
+                        <option value="60">Family Sentinel — $59.99</option>
+                        <option value="150">Regional Guardian — $149.98</option>
                     </select>
                 </div>
 
                 <div class="grid gap-5">
-                    <input type="text" id="donor-name" required class="w-full bg-slate-50 border-2 border-transparent p-6 rounded-[1.5rem] text-sm font-semibold outline-none focus:border-blue-500 focus:bg-white transition-all" placeholder="Legal Full Name">
+                    <input type="text"  id="donor-name"  required class="w-full bg-slate-50 border-2 border-transparent p-6 rounded-[1.5rem] text-sm font-semibold outline-none focus:border-blue-500 focus:bg-white transition-all" placeholder="Legal Full Name">
                     <input type="email" id="donor-email" required class="w-full bg-slate-50 border-2 border-transparent p-6 rounded-[1.5rem] text-sm font-semibold outline-none focus:border-blue-500 focus:bg-white transition-all" placeholder="Secure Email Address">
-                    <input type="tel" id="donor-phone" required class="w-full bg-slate-50 border-2 border-transparent p-6 rounded-[1.5rem] text-sm font-semibold outline-none focus:border-blue-500 focus:bg-white transition-all" placeholder="Primary Contact Line">
+                    <input type="tel"   id="donor-phone" required class="w-full bg-slate-50 border-2 border-transparent p-6 rounded-[1.5rem] text-sm font-semibold outline-none focus:border-blue-500 focus:bg-white transition-all" placeholder="Primary Contact Line">
                 </div>
                 
-                <button type="submit" id="submit-btn" class="w-full bg-blue-700 text-white py-7 rounded-[1.5rem] font-black uppercase text-xs tracking-[0.2em] shadow-2xl hover:bg-blue-800 transition transform hover:scale-[1.02]">Confirm & Secure Perimeter</button>
+                <!-- Error message area -->
+                <p id="form-error" class="text-red-500 text-xs text-center font-semibold hidden"></p>
+
+                <button type="submit" id="submit-btn" class="w-full bg-blue-700 text-white py-7 rounded-[1.5rem] font-black uppercase text-xs tracking-[0.2em] shadow-2xl hover:bg-blue-800 transition transform hover:scale-[1.02] disabled:opacity-60 disabled:cursor-not-allowed disabled:transform-none">
+                    Confirm &amp; Secure Perimeter
+                </button>
             </form>
             
             <p class="text-[9px] text-center text-slate-400 mt-8 font-black uppercase tracking-widest leading-relaxed">
@@ -152,108 +159,107 @@
     </div>
 
     <script>
-        function openForm(tierValue = '60') { 
-            document.getElementById('intake-form').classList.remove('hidden'); 
-            if (tierValue) {
-                document.getElementById('donation-tier').value = tierValue;
-            }
-        }
-        function closeForm() { document.getElementById('intake-form').classList.add('hidden'); }
+        // ── CONFIG ────────────────────────────────────────────────────────────
+        // Replace with your actual PythonAnywhere URL
+        const BACKEND_URL = "https://Eldershield.pythonanywhere.com";
+        // ─────────────────────────────────────────────────────────────────────
 
-        // --- EXPANDED TICKER LOGIC (Dynamic & Massive) ---
-        const scams = ["Audio Deepfake", "Synthetic Frequency", "Metadata Breach", "Impersonation Protocol", "SSN Harvest Attempt", "Registry Injection", "Voice Clone Phishing", "Packet Sniffing", "Encryption Bypass", "Whitelisting Deviation"];
-        const cities = ["Tulsa, OK", "Edmond, OK", "Austin, TX", "Miami, FL", "Columbus, OH", "Dallas, TX", "Phoenix, AZ", "Atlanta, GA", "Denver, CO", "Seattle, WA", "Chicago, IL", "Houston, TX", "Nashville, TN", "Las Vegas, NV", "Portland, OR"];
-        
+        function openForm(tierValue) {
+            document.getElementById('intake-form').classList.remove('hidden');
+            document.getElementById('form-error').classList.add('hidden');
+            if (tierValue) document.getElementById('donation-tier').value = tierValue;
+        }
+        function closeForm() {
+            document.getElementById('intake-form').classList.add('hidden');
+        }
+
+        // ── Ticker ────────────────────────────────────────────────────────────
+        const scams = ["Audio Deepfake","Synthetic Frequency","Metadata Breach","Impersonation Protocol","SSN Harvest Attempt","Registry Injection","Voice Clone Phishing","Packet Sniffing","Encryption Bypass","Whitelisting Deviation"];
+        const cities = ["Tulsa, OK","Edmond, OK","Austin, TX","Miami, FL","Columbus, OH","Dallas, TX","Phoenix, AZ","Atlanta, GA","Denver, CO","Seattle, WA","Chicago, IL","Houston, TX","Nashville, TN","Las Vegas, NV","Portland, OR"];
         function generateTicker() {
-            const tickerContainer = document.getElementById('ticker-content');
+            const container = document.getElementById('ticker-content');
             let content = "";
-            // Generating 50+ items for a non-static feel
             for (let i = 0; i < 50; i++) {
-                const time = new Date(Date.now() - Math.floor(Math.random() * 10000000)).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-                const scam = scams[Math.floor(Math.random() * scams.length)];
-                const city = cities[Math.floor(Math.random() * cities.length)];
-                content += `<span class="mx-16 italic font-bold">● <span class="text-blue-400">NEUTRALIZED:</span> ${time} - ${scam} in ${city}</span>`;
+                const t = new Date(Date.now() - Math.floor(Math.random() * 10000000)).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                const s = scams[Math.floor(Math.random() * scams.length)];
+                const c = cities[Math.floor(Math.random() * cities.length)];
+                content += `<span class="mx-16 italic font-bold">● <span class="text-blue-400">NEUTRALIZED:</span> ${t} - ${s} in ${c}</span>`;
             }
-            tickerContainer.innerHTML = content + content;
+            container.innerHTML = content + content;
         }
         generateTicker();
 
-        // --- DYNAMIC COUNTER ---
+        // ── Counter ───────────────────────────────────────────────────────────
         let count = 4102;
         setInterval(() => {
             count += Math.floor(Math.random() * 5) + 2;
             document.getElementById('threat-count').innerText = count.toLocaleString();
         }, 3000);
 
-        // --- MASSIVE NOTIFICATION DATABASE (50+ Donors) ---
+        // ── Live donor notifications ──────────────────────────────────────────
         const donors = [
-            "Robert H. from Tulsa", "Mary S. from Edmond", "D. Peterson from OKC", "Gary V. from Norman",
-            "Linda K. from Broken Arrow", "James W. from Stillwater", "Patricia M. from Moore", "Michael B. from Enid",
-            "Susan J. from Muskogee", "Christopher L. from Bartlesville", "Barbara T. from Owasso", "Matthew D. from Shawnee",
-            "Sarah F. from Bixby", "Joshua R. from Jenks", "Karen G. from Ponca City", "Andrew S. from Duncan",
-            "Nancy W. from Del City", "Brian C. from Sapulpa", "Elizabeth M. from Sand Springs", "Kevin O. from Bethany",
-            "Linda P. from Claremore", "Steven H. from Altus", "Margaret N. from McAlester", "Thomas E. from El Reno",
-            "Dorothy A. from Ada", "Daniel K. from Durant", "Lisa B. from Chickasha", "Paul S. from Tahlequah",
-            "Donna M. from Miami", "Richard F. from Woodward", "Carol L. from Guymon", "Joseph W. from Weatherford",
-            "Sandra D. from Okmulgee", "Charles G. from Guthrie", "Betty P. from Warr Acres", "Mark R. from Newcastle",
-            "Ashley Y. from Glenpool", "Donald B. from Mustang", "Kimberly T. from Choctaw", "Kenneth M. from Piedmont",
-            "Alice V. from Coweta", "Edward N. from Yukon", "Evelyn J. from Clinton", "Ronald C. from Cushing",
-            "Ruth S. from Sallisaw", "Jason L. from Seminole", "Helen K. from Blackwell", "Larry D. from Anadarko",
-            "Deborah G. from Grove", "Frank R. from Idabel", "Janet B. from Poteau", "Stephen P. from Wagoner"
+            "Robert H. from Tulsa","Mary S. from Edmond","D. Peterson from OKC","Gary V. from Norman",
+            "Linda K. from Broken Arrow","James W. from Stillwater","Patricia M. from Moore","Michael B. from Enid",
+            "Susan J. from Muskogee","Christopher L. from Bartlesville","Barbara T. from Owasso","Matthew D. from Shawnee",
+            "Sarah F. from Bixby","Joshua R. from Jenks","Karen G. from Ponca City","Andrew S. from Duncan",
+            "Nancy W. from Del City","Brian C. from Sapulpa","Elizabeth M. from Sand Springs","Kevin O. from Bethany",
+            "Linda P. from Claremore","Steven H. from Altus","Margaret N. from McAlester","Thomas E. from El Reno",
+            "Dorothy A. from Ada","Daniel K. from Durant","Lisa B. from Chickasha","Paul S. from Tahlequah",
+            "Donna M. from Miami","Richard F. from Woodward","Carol L. from Guymon","Joseph W. from Weatherford",
+            "Sandra D. from Okmulgee","Charles G. from Guthrie","Betty P. from Warr Acres","Mark R. from Newcastle",
+            "Ashley Y. from Glenpool","Donald B. from Mustang","Kimberly T. from Choctaw","Kenneth M. from Piedmont",
+            "Alice V. from Coweta","Edward N. from Yukon","Evelyn J. from Clinton","Ronald C. from Cushing",
+            "Ruth S. from Sallisaw","Jason L. from Seminole","Helen K. from Blackwell","Larry D. from Anadarko",
+            "Deborah G. from Grove","Frank R. from Idabel","Janet B. from Poteau","Stephen P. from Wagoner"
         ];
-
         function showPop() {
-            const pop = document.getElementById('live-pop');
-            if(pop) {
-                const donor = donors[Math.floor(Math.random() * donors.length)];
-                document.getElementById('pop-text').innerText = donor;
-                pop.classList.remove('hidden');
-                
-                // Randomize time between notifications for a "human" feel
-                const visibleTime = 5000;
-                const nextInterval = Math.random() * 15000 + 5000; 
-
-                setTimeout(() => { 
-                    pop.classList.add('hidden'); 
-                    setTimeout(showPop, nextInterval);
-                }, visibleTime);
-            }
+            const pop   = document.getElementById('live-pop');
+            const donor = donors[Math.floor(Math.random() * donors.length)];
+            document.getElementById('pop-text').innerText = donor;
+            pop.classList.remove('hidden');
+            const next = Math.random() * 15000 + 5000;
+            setTimeout(() => { pop.classList.add('hidden'); setTimeout(showPop, next); }, 5000);
         }
         setTimeout(showPop, 5000);
 
+        // ── Form submit → backend → ShieldClimb redirect ──────────────────────
         async function handleFormSubmit(event) {
             event.preventDefault();
-            const btn = document.getElementById('submit-btn');
-            const originalText = btn.innerText;
-            btn.innerText = "ESTABLISHING SECURE CONNECTION...";
-            btn.disabled = true;
 
-            const selectedTier = document.getElementById('donation-tier').value;
-            const amount = selectedTier === '150' ? "149.98" : "59.99";
-            
-            // YOUR ACTUAL WALLET ADDRESS
-            const myWallet = "0x245214FdCBc0b3DADBB40DfDE84C1EF966f930BD"; 
+            const btn      = document.getElementById('submit-btn');
+            const errorEl  = document.getElementById('form-error');
+            const tier     = document.getElementById('donation-tier').value;
+            const email    = document.getElementById('donor-email').value.trim();
+
+            // Hide any previous error
+            errorEl.classList.add('hidden');
+            errorEl.textContent = '';
+
+            // Loading state
+            btn.disabled     = true;
+            btn.textContent  = 'ESTABLISHING SECURE CONNECTION...';
 
             try {
-                // We use a Proxy Bridge to bypass PythonAnywhere's blocks and CORS errors
-                const proxy = "https://corsproxy.io/?";
-                const targetApi = `https://shieldclimb.com/api/create-wallet.php?address=${myWallet}&callback=https://google.com`;
-                
-                const response = await fetch(proxy + encodeURIComponent(targetApi));
-                const walletData = await response.json();
+                const response = await fetch(`${BACKEND_URL}/create-payment`, {
+                    method:  'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ tier, email }),
+                });
 
-                if (walletData.address_in) {
-                    // Redirect directly to checkout
-                    const finalUrl = `https://payment.shieldclimb.com/hosted-checkout.php?address=${walletData.address_in}&amount=${amount}&currency=USD&order_id=GP_${selectedTier}_${Date.now()}`;
-                    window.location.href = finalUrl;
-                } else {
-                    throw new Error("Gateway Refused Connection");
+                const result = await response.json();
+
+                if (!response.ok || !result.checkout_url) {
+                    throw new Error(result.error || 'Could not create checkout session.');
                 }
-            } catch (e) {
-                console.error(e);
-                alert("Network congestion. Please refresh the page and try one more time.");
-                btn.disabled = false;
-                btn.innerText = originalText;
+
+                // Redirect customer to ShieldClimb hosted checkout
+                window.location.href = result.checkout_url;
+
+            } catch (err) {
+                errorEl.textContent = err.message || 'Network error. Please try again.';
+                errorEl.classList.remove('hidden');
+                btn.disabled    = false;
+                btn.textContent = 'Confirm & Secure Perimeter';
             }
         }
     </script>
