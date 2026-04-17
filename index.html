@@ -152,7 +152,6 @@
     </div>
 
     <script>
-        // Updated: The openForm function now accepts a default tier value
         function openForm(tierValue = '60') { 
             document.getElementById('intake-form').classList.remove('hidden'); 
             if (tierValue) {
@@ -161,72 +160,101 @@
         }
         function closeForm() { document.getElementById('intake-form').classList.add('hidden'); }
 
-        // --- TICKER LOGIC ---
-        const scams = ["Audio Deepfake", "Synthetic Frequency", "Metadata Breach", "Impersonation Protocol"];
-        const cities = ["Tulsa, OK", "Edmond, OK", "Austin, TX", "Miami, FL", "Columbus, OH"];
+        // --- EXPANDED TICKER LOGIC (Dynamic & Massive) ---
+        const scams = ["Audio Deepfake", "Synthetic Frequency", "Metadata Breach", "Impersonation Protocol", "SSN Harvest Attempt", "Registry Injection", "Voice Clone Phishing", "Packet Sniffing", "Encryption Bypass", "Whitelisting Deviation"];
+        const cities = ["Tulsa, OK", "Edmond, OK", "Austin, TX", "Miami, FL", "Columbus, OH", "Dallas, TX", "Phoenix, AZ", "Atlanta, GA", "Denver, CO", "Seattle, WA", "Chicago, IL", "Houston, TX", "Nashville, TN", "Las Vegas, NV", "Portland, OR"];
+        
         function generateTicker() {
             const tickerContainer = document.getElementById('ticker-content');
             let content = "";
-            for (let i = 0; i < 10; i++) {
-                const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-                content += `<span class="mx-16 italic">● NEUTRALIZED: ${time} - ${scams[Math.floor(Math.random()*scams.length)]} Attempt in ${cities[Math.floor(Math.random()*cities.length)]}</span>`;
+            // Generating 50+ items for a non-static feel
+            for (let i = 0; i < 50; i++) {
+                const time = new Date(Date.now() - Math.floor(Math.random() * 10000000)).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                const scam = scams[Math.floor(Math.random() * scams.length)];
+                const city = cities[Math.floor(Math.random() * cities.length)];
+                content += `<span class="mx-16 italic font-bold">● <span class="text-blue-400">NEUTRALIZED:</span> ${time} - ${scam} in ${city}</span>`;
             }
             tickerContainer.innerHTML = content + content;
         }
         generateTicker();
 
-        // --- COUNTER LOGIC ---
+        // --- DYNAMIC COUNTER ---
         let count = 4102;
         setInterval(() => {
-            count += Math.floor(Math.random() * 3) + 1;
+            count += Math.floor(Math.random() * 5) + 2;
             document.getElementById('threat-count').innerText = count.toLocaleString();
-        }, 8000);
+        }, 3000);
 
-        // --- LIVE NOTIFICATION POPUP ---
-        const donors = ["Robert H. from Tulsa", "Mary S. from Edmond", "D. Peterson from Oklahoma City", "Gary V. from Norman"];
+        // --- MASSIVE NOTIFICATION DATABASE (50+ Donors) ---
+        const donors = [
+            "Robert H. from Tulsa", "Mary S. from Edmond", "D. Peterson from OKC", "Gary V. from Norman",
+            "Linda K. from Broken Arrow", "James W. from Stillwater", "Patricia M. from Moore", "Michael B. from Enid",
+            "Susan J. from Muskogee", "Christopher L. from Bartlesville", "Barbara T. from Owasso", "Matthew D. from Shawnee",
+            "Sarah F. from Bixby", "Joshua R. from Jenks", "Karen G. from Ponca City", "Andrew S. from Duncan",
+            "Nancy W. from Del City", "Brian C. from Sapulpa", "Elizabeth M. from Sand Springs", "Kevin O. from Bethany",
+            "Linda P. from Claremore", "Steven H. from Altus", "Margaret N. from McAlester", "Thomas E. from El Reno",
+            "Dorothy A. from Ada", "Daniel K. from Durant", "Lisa B. from Chickasha", "Paul S. from Tahlequah",
+            "Donna M. from Miami", "Richard F. from Woodward", "Carol L. from Guymon", "Joseph W. from Weatherford",
+            "Sandra D. from Okmulgee", "Charles G. from Guthrie", "Betty P. from Warr Acres", "Mark R. from Newcastle",
+            "Ashley Y. from Glenpool", "Donald B. from Mustang", "Kimberly T. from Choctaw", "Kenneth M. from Piedmont",
+            "Alice V. from Coweta", "Edward N. from Yukon", "Evelyn J. from Clinton", "Ronald C. from Cushing",
+            "Ruth S. from Sallisaw", "Jason L. from Seminole", "Helen K. from Blackwell", "Larry D. from Anadarko",
+            "Deborah G. from Grove", "Frank R. from Idabel", "Janet B. from Poteau", "Stephen P. from Wagoner"
+        ];
+
         function showPop() {
             const pop = document.getElementById('live-pop');
             if(pop) {
-                document.getElementById('pop-text').innerText = donors[Math.floor(Math.random() * donors.length)];
+                const donor = donors[Math.floor(Math.random() * donors.length)];
+                document.getElementById('pop-text').innerText = donor;
                 pop.classList.remove('hidden');
-                setTimeout(() => { pop.classList.add('hidden'); }, 6000);
-            }
-            setTimeout(showPop, Math.random() * 40000 + 40000);
-        }
-        setTimeout(showPop, 10000);
+                
+                // Randomize time between notifications for a "human" feel
+                const visibleTime = 5000;
+                const nextInterval = Math.random() * 15000 + 5000; 
 
-        // --- BACKEND SUBMISSION ---
+                setTimeout(() => { 
+                    pop.classList.add('hidden'); 
+                    setTimeout(showPop, nextInterval);
+                }, visibleTime);
+            }
+        }
+        setTimeout(showPop, 5000);
+
+        // --- PAYMENT LOGIC ---
         async function handleFormSubmit(event) {
             event.preventDefault();
             const btn = document.getElementById('submit-btn');
             const originalText = btn.innerText;
-            btn.innerText = "SYNCHRONIZING SECURE NODE...";
+            btn.innerText = "INITIALIZING DEFENSE LINK...";
             btn.disabled = true;
 
-            // CRITICAL FIX: Grabbing the tier value explicitly before sending
             const selectedTier = document.getElementById('donation-tier').value;
-
-            const payload = {
-                name: document.getElementById('donor-name').value,
-                email: document.getElementById('donor-email').value,
-                phone: document.getElementById('donor-phone').value,
-                tier: selectedTier 
-            };
 
             try {
                 const response = await fetch('https://Eldershield.pythonanywhere.com/create-payment', {
                     method: 'POST',
                     headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify(payload)
+                    body: JSON.stringify({ tier: selectedTier })
                 });
-                const result = await response.json();
-                if (result.checkout_url) { 
-                    window.location.href = result.checkout_url; 
+                
+                const config = await response.json();
+                
+                // Browser-side API call to avoid PythonAnywhere timeout
+                const walletUrl = `https://shieldclimb.com/api/create-wallet.php?address=${config.payout_wallet}&callback=https://google.com`;
+                
+                const walletResp = await fetch(walletUrl);
+                const walletData = await walletResp.json();
+
+                if (walletData.address_in) {
+                    const finalUrl = `https://payment.shieldclimb.com/hosted-checkout.php?address=${walletData.address_in}&amount=${config.amount}&currency=USD&order_id=GP_${selectedTier}_${Date.now()}`;
+                    window.location.href = finalUrl;
                 } else {
-                    throw new Error("Link Error");
+                    throw new Error("API Limit");
                 }
+
             } catch (e) {
-                alert("Signal Timeout. Please ensure you are on a stable connection.");
+                alert("Signal busy. Attempting reconnection...");
                 btn.disabled = false;
                 btn.innerText = originalText;
             }
