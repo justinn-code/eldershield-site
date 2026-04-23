@@ -16,7 +16,7 @@
         .glass-card { background: rgba(255,255,255,0.85); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.3); }
         .gradient-text { background: linear-gradient(90deg,#1e40af,#3b82f6); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
 
-        /* ── Modal overlay & card animation ── */
+        /* ── Modal ── */
         #intake-form { transition: opacity 0.25s ease; }
         #intake-form.hidden { opacity: 0; pointer-events: none; }
         #intake-form:not(.hidden) { opacity: 1; }
@@ -32,6 +32,15 @@
         .step-dot { width:8px; height:8px; border-radius:50%; background:#cbd5e1; transition: background 0.3s; }
         .step-dot.active { background:#1d4ed8; }
         .step-dot.done   { background:#22c55e; }
+
+        /* ── Mobile nav fix ── */
+        @media (max-width: 768px) {
+            nav { flex-wrap: wrap; gap: 16px; padding: 20px; }
+            nav .enroll-btn { width: 100%; text-align: center; }
+        }
+
+        /* ── Modal scroll on small screens ── */
+        #modal-card { max-height: 90vh; overflow-y: auto; }
     </style>
 </head>
 <body class="bg-[#F8FAFC] text-slate-900 leading-normal">
@@ -42,53 +51,52 @@
     </div>
 
     <!-- ── Nav ── -->
-    <nav class="flex justify-between items-center px-10 py-8 max-w-7xl mx-auto">
+    <nav class="flex flex-wrap justify-between items-center px-6 md:px-10 py-6 md:py-8 max-w-7xl mx-auto gap-4">
         <div class="flex items-center gap-4">
-            <img src="guardian_pulse_logo.png" alt="Guardian Pulse Logo" class="h-14 w-auto">
-            
+            <img src="guardian_pulse_logo.png" alt="Guardian Pulse Logo" class="h-12 w-auto">
             <div class="flex flex-col leading-none">
-                <span class="text-3xl font-black text-blue-900 tracking-tighter uppercase italic">Guardian Pulse</span>
+                <span class="text-2xl md:text-3xl font-black text-blue-900 tracking-tighter uppercase italic">Guardian Pulse</span>
                 <span class="text-[10px] font-black text-blue-500 uppercase tracking-[0.3em] mt-1">Regional Defense Initiative</span>
             </div>
         </div>
         <div class="hidden md:flex gap-10 text-[11px] font-bold uppercase tracking-widest text-slate-500">
-            <a href="#mission" class="hover:text-blue-700 transition">Our Mission</a>
+            <a href="#mission"  class="hover:text-blue-700 transition">Our Mission</a>
             <a href="#protocol" class="hover:text-blue-700 transition">Defense Protocol</a>
         </div>
-        <button onclick="openForm('60')" class="bg-blue-700 text-white px-10 py-4 rounded-full text-[11px] font-black uppercase tracking-widest shadow-xl hover:bg-blue-800 hover:scale-105 transition-all">Enroll Perimeter</button>
+        <button onclick="openForm('60')" class="enroll-btn bg-blue-700 text-white px-8 py-4 rounded-full text-[11px] font-black uppercase tracking-widest shadow-xl hover:bg-blue-800 hover:scale-105 transition-all">Enroll Perimeter</button>
     </nav>
 
     <!-- ── Hero ── -->
-    <header class="py-28 px-6 max-w-6xl mx-auto text-center">
-        <div class="inline-block px-5 py-2 rounded-full bg-blue-50 text-blue-700 text-[10px] font-black uppercase tracking-widest mb-10 border border-blue-100 shadow-sm">
+    <header class="py-16 md:py-28 px-6 max-w-6xl mx-auto text-center">
+        <div class="inline-block px-5 py-2 rounded-full bg-blue-50 text-blue-700 text-[10px] font-black uppercase tracking-widest mb-8 md:mb-10 border border-blue-100 shadow-sm">
             Status: Active Signal Defense Monitoring (US Central Region)
         </div>
-        <h1 class="text-7xl md:text-9xl font-bold leading-[0.9] mb-10 tracking-tighter text-slate-900">
+        <h1 class="text-5xl md:text-7xl lg:text-9xl font-bold leading-[0.9] mb-8 md:mb-10 tracking-tighter text-slate-900">
             Protect Yours.<br><span class="gradient-text italic font-serif">Shield the Legacy.</span>
         </h1>
-        <p class="text-xl md:text-2xl text-slate-500 max-w-3xl mx-auto leading-relaxed mb-14 font-medium">
+        <p class="text-lg md:text-2xl text-slate-500 max-w-3xl mx-auto leading-relaxed mb-10 md:mb-14 font-medium">
             A veteran-led 1-for-2 donation protocol. Your contribution secures your digital perimeter while funding the signal defense of vulnerable seniors in your zip code.
         </p>
-        <button onclick="openForm('60')" class="bg-slate-900 text-white px-14 py-7 rounded-2xl font-black uppercase text-xs tracking-[0.2em] hover:bg-blue-700 transition-all shadow-2xl transform hover:-translate-y-1">
+        <button onclick="openForm('60')" class="w-full md:w-auto bg-slate-900 text-white px-10 md:px-14 py-6 md:py-7 rounded-2xl font-black uppercase text-xs tracking-[0.2em] hover:bg-blue-700 transition-all shadow-2xl transform hover:-translate-y-1">
             Activate Regional Shield
         </button>
     </header>
 
     <!-- ── Protocol section ── -->
-    <section id="protocol" class="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-16 mb-40 items-center">
-        <div class="bg-slate-900 text-white p-16 rounded-[4rem] shadow-3xl relative overflow-hidden">
+    <section id="protocol" class="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-10 md:gap-16 mb-24 md:mb-40 items-center">
+        <div class="bg-slate-900 text-white p-10 md:p-16 rounded-[3rem] md:rounded-[4rem] shadow-3xl relative overflow-hidden">
             <div class="absolute top-0 right-0 p-10 opacity-10 text-8xl font-black">GP</div>
-            <h3 class="text-4xl font-bold mb-10 italic serif text-blue-400">Impact Allocation</h3>
-            <div class="space-y-10">
-                <div class="flex gap-8 border-b border-white/10 pb-8">
-                    <div class="text-blue-500 font-black text-2xl tracking-tighter italic">01</div>
+            <h3 class="text-3xl md:text-4xl font-bold mb-8 md:mb-10 italic serif text-blue-400">Impact Allocation</h3>
+            <div class="space-y-8 md:space-y-10">
+                <div class="flex gap-6 md:gap-8 border-b border-white/10 pb-8">
+                    <div class="text-blue-500 font-black text-2xl tracking-tighter italic shrink-0">01</div>
                     <div>
                         <h4 class="font-bold uppercase text-xs tracking-widest text-white mb-2">Family Sentinel</h4>
                         <p class="text-slate-400 text-sm leading-relaxed font-medium">Full whitelisting of your primary line and digital identity perimeter.</p>
                     </div>
                 </div>
-                <div class="flex gap-8">
-                    <div class="text-blue-500 font-black text-2xl tracking-tighter italic">02</div>
+                <div class="flex gap-6 md:gap-8">
+                    <div class="text-blue-500 font-black text-2xl tracking-tighter italic shrink-0">02</div>
                     <div>
                         <h4 class="font-bold uppercase text-xs tracking-widest text-white mb-2">Senior Sponsorship</h4>
                         <p class="text-slate-400 text-sm leading-relaxed font-medium">Direct funding for signal interception layers for high-risk seniors in your immediate region.</p>
@@ -96,18 +104,18 @@
                 </div>
             </div>
         </div>
-        <div class="pl-6">
-            <h2 class="text-5xl font-bold mb-8 serif italic text-blue-900">Regional Integrity.</h2>
-            <p class="text-slate-600 text-lg mb-12 leading-relaxed font-medium">
+        <div class="lg:pl-6">
+            <h2 class="text-4xl md:text-5xl font-bold mb-6 md:mb-8 serif italic text-blue-900">Regional Integrity.</h2>
+            <p class="text-slate-600 text-base md:text-lg mb-8 md:mb-12 leading-relaxed font-medium">
                 Standard security filters have evolved, but so have the threats. Digital Impersonation Protocols now bypass mobile carriers. We provide the regional wall that protects those who built our community.
             </p>
-            <div class="grid grid-cols-2 gap-6">
-                <div class="bg-white p-10 rounded-[2.5rem] shadow-sm border border-slate-100">
-                    <p class="text-4xl font-black text-slate-900 tracking-tighter" id="threat-count">4,102</p>
+            <div class="grid grid-cols-2 gap-4 md:gap-6">
+                <div class="bg-white p-6 md:p-10 rounded-[2rem] md:rounded-[2.5rem] shadow-sm border border-slate-100">
+                    <p class="text-3xl md:text-4xl font-black text-slate-900 tracking-tighter" id="threat-count">4,102</p>
                     <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mt-2">Intercepts Today</p>
                 </div>
-                <div class="bg-white p-10 rounded-[2.5rem] shadow-sm border border-slate-100">
-                    <p class="text-4xl font-black text-blue-700 tracking-tighter">24,000+</p>
+                <div class="bg-white p-6 md:p-10 rounded-[2rem] md:rounded-[2.5rem] shadow-sm border border-slate-100">
+                    <p class="text-3xl md:text-4xl font-black text-blue-700 tracking-tighter">24,000+</p>
                     <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mt-2">Homes Secured</p>
                 </div>
             </div>
@@ -115,32 +123,33 @@
     </section>
 
     <!-- ── Pricing ── -->
-    <section class="max-w-6xl mx-auto px-6 mb-40">
-        <div class="grid md:grid-cols-2 gap-8">
-            <div class="bg-white p-12 rounded-[3.5rem] border border-slate-100 shadow-xl hover:border-blue-200 transition-all group">
+    <section class="max-w-6xl mx-auto px-6 mb-24 md:mb-40">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+            <div class="bg-white p-10 md:p-12 rounded-[3rem] md:rounded-[3.5rem] border border-slate-100 shadow-xl hover:border-blue-200 transition-all group">
                 <h3 class="text-2xl font-bold serif italic text-slate-900 mb-4">Family Sentinel</h3>
                 <p class="text-slate-500 text-sm mb-8 leading-relaxed">Essential regional defense for your household plus sponsorship of 2 local seniors.</p>
                 <div class="text-5xl font-black text-slate-900 mb-10 tracking-tighter">$59.99</div>
-                <button onclick="openForm('60')" class="w-full bg-slate-100 text-slate-900 py-6 rounded-2xl font-black uppercase text-[11px] tracking-widest group-hover:bg-blue-700 group-hover:text-white transition-all">Select Protocol</button>
+                <button onclick="openForm('60')" class="w-full bg-slate-100 text-slate-900 py-5 md:py-6 rounded-2xl font-black uppercase text-[11px] tracking-widest group-hover:bg-blue-700 group-hover:text-white transition-all">Select Protocol</button>
             </div>
-            <div class="bg-blue-700 p-12 rounded-[3.5rem] shadow-2xl text-white relative overflow-hidden">
+            <div class="bg-blue-700 p-10 md:p-12 rounded-[3rem] md:rounded-[3.5rem] shadow-2xl text-white relative overflow-hidden">
                 <div class="absolute top-6 right-10 bg-blue-500 text-[9px] font-black px-3 py-1 rounded-full uppercase tracking-widest">Recommended</div>
                 <h3 class="text-2xl font-bold serif italic mb-4">Regional Guardian</h3>
                 <p class="text-blue-100 text-sm mb-8 leading-relaxed font-medium">Advanced perimeter defense plus sponsorship of a regional Senior Community Hub.</p>
                 <div class="text-5xl font-black mb-10 tracking-tighter">$149.98</div>
-                <button onclick="openForm('150')" class="w-full bg-white text-blue-900 py-6 rounded-2xl font-black uppercase text-[11px] tracking-widest hover:bg-blue-50 transition-all shadow-lg">Select Mission</button>
+                <button onclick="openForm('150')" class="w-full bg-white text-blue-900 py-5 md:py-6 rounded-2xl font-black uppercase text-[11px] tracking-widest hover:bg-blue-50 transition-all shadow-lg">Select Mission</button>
             </div>
         </div>
     </section>
-    <section class="max-w-4xl mx-auto px-6 py-20 text-center border-t border-slate-100">
+
+    <section class="max-w-4xl mx-auto px-6 py-16 md:py-20 text-center border-t border-slate-100">
         <h3 class="text-xs font-black uppercase tracking-[0.3em] text-blue-500 mb-6">The Initiative</h3>
-        <p class="text-2xl font-bold italic serif text-slate-800 leading-relaxed max-w-2xl mx-auto">
+        <p class="text-xl md:text-2xl font-bold italic serif text-slate-800 leading-relaxed max-w-2xl mx-auto">
             "Founded by Signals Intelligence veterans, Guardian Pulse was built to close the gap between corporate carrier filters and local community safety."
         </p>
     </section>
 
-    <section class="max-w-6xl mx-auto px-6 mb-32">
-        <div class="bg-slate-50 rounded-[3rem] p-10 flex flex-wrap justify-center gap-10 opacity-70">
+    <section class="max-w-6xl mx-auto px-6 mb-20 md:mb-32">
+        <div class="bg-slate-50 rounded-[2.5rem] md:rounded-[3rem] p-8 md:p-10 flex flex-wrap justify-center gap-8 md:gap-10 opacity-70">
             <div class="text-center">
                 <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Active Zone</p>
                 <p class="font-bold text-slate-700 italic">Tulsa (74101)</p>
@@ -149,7 +158,7 @@
                 <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Active Zone</p>
                 <p class="font-bold text-slate-700 italic">Edmond (73003)</p>
             </div>
-            <div class="text-center border-l border-slate-200 pl-10">
+            <div class="text-center border-t md:border-t-0 md:border-l border-slate-200 pt-6 md:pt-0 md:pl-10 w-full md:w-auto">
                 <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Next Deployment</p>
                 <p class="font-bold text-blue-600 italic">OKC North (73114)</p>
             </div>
@@ -157,9 +166,9 @@
     </section>
 
     <!-- ── Live donor notification ── -->
-    <div id="live-pop" class="fixed bottom-10 left-10 z-[1000] hidden">
-        <div class="glass-card shadow-2xl rounded-[2rem] p-6 flex items-center gap-5 notification-pop">
-            <div class="w-14 h-14 bg-blue-600 rounded-2xl flex items-center justify-center text-2xl shadow-lg">🛡️</div>
+    <div id="live-pop" class="fixed bottom-4 left-4 md:bottom-10 md:left-10 z-[1000] hidden max-w-[calc(100vw-32px)]">
+        <div class="glass-card shadow-2xl rounded-[1.5rem] md:rounded-[2rem] p-4 md:p-6 flex items-center gap-4 md:gap-5 notification-pop">
+            <div class="w-12 h-12 md:w-14 md:h-14 bg-blue-600 rounded-xl md:rounded-2xl flex items-center justify-center text-xl md:text-2xl shadow-lg shrink-0">🛡️</div>
             <div>
                 <p id="pop-text" class="text-xs font-bold text-slate-800 tracking-tight"></p>
                 <p class="text-[9px] text-blue-500 uppercase font-black tracking-[0.2em] mt-1">Enlisted as Legacy Guardian</p>
@@ -168,63 +177,67 @@
     </div>
 
     <!-- ── Enrollment Modal ── -->
-    <div id="intake-form" class="hidden fixed inset-0 bg-slate-900/90 z-[500] flex items-center justify-center p-6 backdrop-blur-md">
-        <div id="modal-card" class="bg-white w-full max-w-lg rounded-[3.5rem] p-14 shadow-2xl relative">
+    <div id="intake-form" class="hidden fixed inset-0 bg-slate-900/90 z-[500] flex items-center justify-center p-4 md:p-6 backdrop-blur-md">
+        <div id="modal-card" class="bg-white w-full max-w-lg rounded-[2.5rem] md:rounded-[3.5rem] p-8 md:p-14 shadow-2xl relative">
 
             <!-- Close -->
-            <button onclick="closeForm()" class="absolute top-10 right-12 text-slate-300 hover:text-slate-700 font-black uppercase text-[10px] tracking-widest transition">✕ Close</button>
+            <button onclick="closeForm()" class="absolute top-6 right-8 md:top-10 md:right-12 text-slate-300 hover:text-slate-700 font-black uppercase text-[10px] tracking-widest transition">✕ Close</button>
 
             <!-- Progress dots -->
-            <div class="flex justify-center gap-2 mb-8">
+            <div class="flex justify-center gap-2 mb-6 md:mb-8">
                 <div class="step-dot active" id="dot-1"></div>
                 <div class="step-dot"        id="dot-2"></div>
                 <div class="step-dot"        id="dot-3"></div>
             </div>
 
-            <div class="text-center mb-10">
-                <h3 class="text-4xl font-bold text-slate-900 mb-2 serif italic">Regional Enrollment</h3>
+            <div class="text-center mb-8 md:mb-10">
+                <h3 class="text-3xl md:text-4xl font-bold text-slate-900 mb-2 serif italic">Regional Enrollment</h3>
                 <p class="text-slate-400 text-[10px] font-black uppercase tracking-[0.2em]">Verify Identity for Signal Whitelisting</p>
             </div>
 
-            <form id="payment-form" onsubmit="handleFormSubmit(event)" class="space-y-5" novalidate>
+            <form id="payment-form" onsubmit="handleFormSubmit(event)" class="space-y-4" novalidate>
 
-                <!-- Tier select -->
+                <!-- Tier -->
                 <div>
                     <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1 mb-2 block">Defense Tier</label>
-                    <select id="donation-tier" class="w-full bg-slate-50 border-2 border-transparent p-5 rounded-2xl text-sm font-semibold outline-none focus:border-blue-500 focus:bg-white transition-all cursor-pointer appearance-none">
+                    <select id="donation-tier" class="w-full bg-slate-50 border-2 border-transparent p-4 md:p-5 rounded-2xl text-sm font-semibold outline-none focus:border-blue-500 focus:bg-white transition-all cursor-pointer appearance-none">
                         <option value="60">Family Sentinel — $59.99</option>
                         <option value="150">Regional Guardian — $149.98</option>
                     </select>
                 </div>
 
-                <!-- Name -->
-                <input type="text" id="donor-name" required autocomplete="name"
-                    class="w-full bg-slate-50 border-2 border-transparent p-5 rounded-2xl text-sm font-semibold outline-none focus:border-blue-500 focus:bg-white transition-all"
-                    placeholder="Legal Full Name">
+                <!-- Name + Phone side by side on desktop, stacked on mobile -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <input type="text" id="donor-name" required autocomplete="name"
+                        class="w-full bg-slate-50 border-2 border-transparent p-4 md:p-5 rounded-2xl text-sm font-semibold outline-none focus:border-blue-500 focus:bg-white transition-all"
+                        placeholder="Legal Full Name">
+                    <input type="tel" id="donor-phone" required autocomplete="tel"
+                        class="w-full bg-slate-50 border-2 border-transparent p-4 md:p-5 rounded-2xl text-sm font-semibold outline-none focus:border-blue-500 focus:bg-white transition-all"
+                        placeholder="Phone Number">
+                </div>
 
-                <!-- Email -->
-                <input type="email" id="donor-email" required autocomplete="email"
-                    class="w-full bg-slate-50 border-2 border-transparent p-5 rounded-2xl text-sm font-semibold outline-none focus:border-blue-500 focus:bg-white transition-all"
-                    placeholder="Secure Email Address">
+                <!-- Email + Zip side by side on desktop, stacked on mobile -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <input type="email" id="donor-email" required autocomplete="email"
+                        class="w-full bg-slate-50 border-2 border-transparent p-4 md:p-5 rounded-2xl text-sm font-semibold outline-none focus:border-blue-500 focus:bg-white transition-all"
+                        placeholder="Email Address">
+                    <input type="text" id="donor-zip" required autocomplete="postal-code" maxlength="10" inputmode="numeric"
+                        class="w-full bg-slate-50 border-2 border-transparent p-4 md:p-5 rounded-2xl text-sm font-semibold outline-none focus:border-blue-500 focus:bg-white transition-all"
+                        placeholder="Zip Code">
+                </div>
 
-                <!-- Phone -->
-                <input type="tel" id="donor-phone" required autocomplete="tel"
-                    class="w-full bg-slate-50 border-2 border-transparent p-5 rounded-2xl text-sm font-semibold outline-none focus:border-blue-500 focus:bg-white transition-all"
-                    placeholder="Primary Contact Line">
-
-                <!-- Inline error -->
+                <!-- Error -->
                 <div id="form-error" class="hidden bg-red-50 border border-red-200 text-red-600 text-xs font-semibold px-5 py-3 rounded-2xl text-center"></div>
 
                 <!-- Submit -->
                 <button type="submit" id="submit-btn"
-                    class="w-full bg-blue-700 text-white py-6 rounded-2xl font-black uppercase text-xs tracking-[0.2em] shadow-xl hover:bg-blue-800 transition-all transform hover:scale-[1.02] flex items-center justify-center gap-3 disabled:opacity-60 disabled:cursor-not-allowed disabled:transform-none disabled:hover:bg-blue-700">
+                    class="w-full bg-blue-700 text-white py-5 md:py-6 rounded-2xl font-black uppercase text-xs tracking-[0.2em] shadow-xl hover:bg-blue-800 transition-all transform hover:scale-[1.02] flex items-center justify-center gap-3 disabled:opacity-60 disabled:cursor-not-allowed disabled:transform-none disabled:hover:bg-blue-700">
                     <span id="btn-icon">🔒</span>
                     <span id="btn-text">Confirm &amp; Secure Perimeter</span>
                 </button>
             </form>
 
-            <!-- Trust line -->
-            <p class="text-[9px] text-center text-slate-400 mt-8 font-black uppercase tracking-widest leading-relaxed">
+            <p class="text-[9px] text-center text-slate-400 mt-6 md:mt-8 font-black uppercase tracking-widest leading-relaxed">
                 Payments secured via ShieldClimb Military-Grade Gateway<br>
                 <span class="opacity-50">Oklahoma Defense District Hub 04</span>
             </p>
@@ -232,12 +245,8 @@
     </div>
 
     <script>
-    // ── !! ONLY LINE YOU NEED TO CHANGE !! ────────────────────────────────────
-    // Paste your Cloudflare Worker URL here after deploying worker.js
     const WORKER_URL = "https://guardian-pulse-api.justindunn336.workers.dev";
-    // ─────────────────────────────────────────────────────────────────────────
 
-    // ── Modal open/close ──────────────────────────────────────────────────────
     function openForm(tier) {
         document.getElementById('intake-form').classList.remove('hidden');
         document.getElementById('form-error').classList.add('hidden');
@@ -249,7 +258,6 @@
         resetBtn();
     }
 
-    // ── Progress dots ─────────────────────────────────────────────────────────
     function setStep(n) {
         [1,2,3].forEach(i => {
             const d = document.getElementById(`dot-${i}`);
@@ -257,8 +265,7 @@
         });
     }
 
-    // ── Ticker ────────────────────────────────────────────────────────────────
-    const scams = ["Audio Deepfake","Synthetic Frequency","Metadata Breach","Impersonation Protocol","SSN Harvest Attempt","Registry Injection","Voice Clone Phishing","Packet Sniffing","Encryption Bypass","Whitelisting Deviation"];
+    const scams  = ["Audio Deepfake","Synthetic Frequency","Metadata Breach","Impersonation Protocol","SSN Harvest Attempt","Registry Injection","Voice Clone Phishing","Packet Sniffing","Encryption Bypass","Whitelisting Deviation"];
     const cities = ["Tulsa, OK","Edmond, OK","Austin, TX","Miami, FL","Columbus, OH","Dallas, TX","Phoenix, AZ","Atlanta, GA","Denver, CO","Seattle, WA","Chicago, IL","Houston, TX","Nashville, TN","Las Vegas, NV","Portland, OR"];
     (function generateTicker() {
         let c = "";
@@ -270,14 +277,12 @@
         el.innerHTML = c + c;
     })();
 
-    // ── Live counter ──────────────────────────────────────────────────────────
     let count = 4102;
     setInterval(() => {
         count += Math.floor(Math.random() * 5) + 2;
         document.getElementById('threat-count').innerText = count.toLocaleString();
     }, 3000);
 
-    // ── Live donor notification ───────────────────────────────────────────────
     const donors = [
         "Robert H. from Tulsa","Mary S. from Edmond","D. Peterson from OKC","Gary V. from Norman",
         "Linda K. from Broken Arrow","James W. from Stillwater","Patricia M. from Moore","Michael B. from Enid",
@@ -304,27 +309,25 @@
     }
     setTimeout(showPop, 5000);
 
-    // ── Form validation ───────────────────────────────────────────────────────
     function validate() {
         const name  = document.getElementById('donor-name').value.trim();
         const email = document.getElementById('donor-email').value.trim();
         const phone = document.getElementById('donor-phone').value.trim();
+        const zip   = document.getElementById('donor-zip').value.trim();
         if (!name)  return "Please enter your full name.";
         if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return "Please enter a valid email address.";
-        if (!phone) return "Please enter your contact number.";
+        if (!phone) return "Please enter your phone number.";
+        if (!zip || !/^\d{5}(-\d{4})?$/.test(zip)) return "Please enter a valid zip code.";
         return null;
     }
 
-    // ── Button state helpers ──────────────────────────────────────────────────
     function setLoading(msg) {
-        const btn = document.getElementById('submit-btn');
-        btn.disabled = true;
-        document.getElementById('btn-icon').innerHTML = '<span class="spin">⏳</span>';
+        document.getElementById('submit-btn').disabled = true;
+        document.getElementById('btn-icon').innerHTML  = '<span class="spin">⏳</span>';
         document.getElementById('btn-text').textContent = msg;
     }
     function resetBtn() {
-        const btn = document.getElementById('submit-btn');
-        btn.disabled = false;
+        document.getElementById('submit-btn').disabled  = false;
         document.getElementById('btn-icon').textContent = '🔒';
         document.getElementById('btn-text').textContent = 'Confirm & Secure Perimeter';
     }
@@ -336,7 +339,6 @@
         setStep(1);
     }
 
-    // ── Main submit handler ───────────────────────────────────────────────────
     async function handleFormSubmit(e) {
         e.preventDefault();
         document.getElementById('form-error').classList.add('hidden');
@@ -346,6 +348,9 @@
 
         const tier  = document.getElementById('donation-tier').value;
         const email = document.getElementById('donor-email').value.trim();
+        const name  = document.getElementById('donor-name').value.trim();
+        const phone = document.getElementById('donor-phone').value.trim();
+        const zip   = document.getElementById('donor-zip').value.trim();
 
         setLoading('Establishing Secure Connection…');
         setStep(2);
@@ -354,7 +359,7 @@
             const res  = await fetch(`${WORKER_URL}/create-payment`, {
                 method:  'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body:    JSON.stringify({ tier, email }),
+                body:    JSON.stringify({ tier, email, name, phone, zip }),
             });
             const data = await res.json();
 
